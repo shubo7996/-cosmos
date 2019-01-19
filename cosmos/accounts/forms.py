@@ -12,5 +12,5 @@ class UserCreateForm(UserCreationForm):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.fields['username'].label = "Enter Username"
-        self.fields['email'] = "Enter Your email ID"
+        self.fields['email'].label = "Enter Your email ID"
         

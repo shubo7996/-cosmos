@@ -20,7 +20,7 @@ class Post(models.Model):
         return self.message
 
     def save(save,*args,**kwargs):
-        self.message_html = misaka.html(self..message)
+        self.message_html = misaka.html(self.message)
         super().save(*args,**kwargs)
 
     def get_absolute_url(self):

@@ -1,0 +1,44 @@
+{% extends "groups/group_base.html" %}
+
+{% block precluster %}
+<div class="col-md-4">
+	<div class="content">
+		{% if user.is_authenticated %}
+		<h2>
+			Welcome back
+			<a href="{% url 'posts:for_user' username=user.username %}">@{{user.username }}</a>
+		</h2>
+
+    {% endif %}
+			<h2>Clusters</h2>
+
+			<p>Welcome to the Groups Page! Select a Group with a shared interest!</p>
+	</div>
+	{% if user.is_authenticated %}
+	<a href="{% url 'clusters:create' %}" class="btn btn-md btn-fill btn-warning"><span class="glyphicon glyphicon-plus-sign"></span> Create New Cluster!</a>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block cluster_content %}
+<div class="col-md-8">
+	<div class="list-group">
+		{% for cluster in object_list %}
+		  <a class="list-group-item" href="{% url 'cluster:single' slug=cluster.slug %}">
+			     <h3 class="title list-group-item-heading">{{ cluster.name }}</h3>
+			<div class="list-group-item-text container-fluid">
+				{{ cluster.description_html|safe }}
+				<div class="row">
+					<div class="col-md-4">
+						<span class="badge">{{ cluster.members.count }}</span> member{{ cluster.members.count|pluralize }}
+					</div>
+					<div class="col-md-4">
+						<span class="badge">{{ cluster.posts.count }}</span> post{{ cluster.posts.count|pluralize }}
+					</div>
+				</div>
+			</div>
+		</a>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

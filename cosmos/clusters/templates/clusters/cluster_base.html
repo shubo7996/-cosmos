@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block myContent %}
+
+<div class = "Container">
+    <div class = "row">
+        {% block precluster %} {% endblock%}
+        {% block cluster_content %} {% endblock%}
+        {% block postcluster %} {% endblock%}
+    </div>
+</div>
+
+{% endblock %}

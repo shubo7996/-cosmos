@@ -1,0 +1,35 @@
+{% extends "clusters/cluster_baser.html"%}
+{% block precluster %}
+
+<h1>{{cluster.name}}</h1>
+<h2>Subscibers: {{cluster.members.count}}</h2>
+
+<div class = "content">
+
+    {% if user in cluster.members.all %}
+        <a href="{% url 'clusters:leave' slug=cluster.slug %}" class="btn btn-lg btn-fill btn-warning"><span class="glyphicon glyphicon-remove-circle"></span> Leave</a>
+	{% else %}
+		<a href="{% url 'clusters:join' slug=cluster.slug %}" class="btn btn-lg btn-fill btn-warning"><span class="glyphicon glyphicon-ok-circle"></span> Join</a>
+	{% endif %}
+
+
+</div>
+
+{% endblock %}
+
+
+{% block cluster_content %}
+
+<div class="col-md-8">
+
+	{% if cluster.posts.count == 0 %}
+	    <h2>No posts in this cluster yet!</h2>
+	{% else %}
+		{% for post in cluster.posts.all %}
+			{% include "posts/_post.html" %}
+		{% endfor %}
+	{% endif %}
+
+</div>
+
+{% endblock %}

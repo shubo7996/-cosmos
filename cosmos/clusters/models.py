@@ -4,6 +4,9 @@ from django.contrib.auth import get_user_model
 import misaka
 from django.urls import reverse
 
+from django import template
+register = template.Library()
+
 User = get_user_model()
 
 class Cluster(models.Model):
@@ -35,7 +38,7 @@ class ClusterMember(models.Model):
 
     user = models.ForeignKey(
         User,
-        verbose_name = 'user_cluster'
+        verbose_name = 'user_clusters'
     )
 
     def __str__(self):

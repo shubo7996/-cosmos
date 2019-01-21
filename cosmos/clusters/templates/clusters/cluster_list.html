@@ -1,4 +1,4 @@
-{% extends "groups/group_base.html" %}
+{% extends "clusters/cluster_base.html" %}
 
 {% block precluster %}
 <div class="col-md-4">
@@ -24,7 +24,7 @@
 <div class="col-md-8">
 	<div class="list-group">
 		{% for cluster in object_list %}
-		  <a class="list-group-item" href="{% url 'cluster:single' slug=cluster.slug %}">
+		  <a class="list-group-item" href="{% url 'clusters:single' slug=cluster.slug %}">
 			     <h3 class="title list-group-item-heading">{{ cluster.name }}</h3>
 			<div class="list-group-item-text container-fluid">
 				{{ cluster.description_html|safe }}

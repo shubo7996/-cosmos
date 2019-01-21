@@ -12,7 +12,7 @@ User = get_user_model()
 class Cluster(models.Model):
     name = models.CharField(max_length=255,unique=True)
     slug = models.SlugField(allow_unicode= True, unique= True)
-    description = models.CharField(blank= True, default= '' )
+    description = models.CharField(max_length=300,blank= True, default= '' )
     description_html = models.TextField(editable=False,default='',blank=True)
     members = models.ManyToManyField(User,through= 'ClusterMember')
 
@@ -21,24 +21,26 @@ class Cluster(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        self.description_html = misaka(self.description)
+        self.description_html = misaka.html(self.description)
         super().save(*args,**kwargs)
 
     def get_absolute_url(self):
         return reverse('clusters:single',kwargs={'slug':self.slug})
 
     class Meta:
-        ordering = ('name')
+        ordering = ['name',]
 
 class ClusterMember(models.Model):
     cluster = models.ForeignKey(
         Cluster,
-        verbose_name = 'subscription'
+        verbose_name = 'memberships',
+        on_delete=models.CASCADE
     )
 
     user = models.ForeignKey(
         User,
-        verbose_name = 'user_clusters'
+        verbose_name = 'user_clusters',
+        on_delete=models.CASCADE
     )
 
     def __str__(self):

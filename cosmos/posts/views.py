@@ -1,9 +1,19 @@
 from django.shortcuts import render
-from django.contrib.auth.mixins import LoginRequiredMixins
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from django.http import Http404
-from django.views import generic
+from django.views.generic import (
+    CreateView,
+    UpdateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    RedirectView
+)
+#from django.views.generic.detail import DetailView
+#from django.views.generic.list import ListView  
+#from django.views.generic.base import RedirectView 
 
 from braces.views import SelectRelatedMixin
 
@@ -14,11 +24,11 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class PostList(SelectRelatedMixin,generic.ListView):
+class PostList(SelectRelatedMixin,ListView):
     model = models.Post
     select_related = ('user', 'cluster')
 
-class UserPosts(generic.ListView):
+class UserPosts(ListView):
     model = models.Post
     template_name = 'posts/user_post_list.html'
 
@@ -38,7 +48,7 @@ class UserPosts(generic.ListView):
         context['post_user'] = self.post_user
         return context
 
-class PostDetail(SelectRelatedMixin,generic.DetailView):
+class PostDetail(SelectRelatedMixin,DetailView):
     model = models.Post
     select_related = ('user','cluster')
 
@@ -46,7 +56,7 @@ class PostDetail(SelectRelatedMixin,generic.DetailView):
         queryset = super().get_queryset()
         return queryset.filter(user__username__iexact=self.kwargs.get('username'))
 
-class CreatePost(LoginRequiredMixins,SelectRelatedMixin,generic.CreateView):
+class CreatePost(LoginRequiredMixin,SelectRelatedMixin,CreateView):
     fields = ('message','cluster')
     model = models.Post
 
@@ -56,7 +66,7 @@ class CreatePost(LoginRequiredMixins,SelectRelatedMixin,generic.CreateView):
         self.object.save()
         return super().form_valid(form)
 
-class DeletePost(LoginRequiredMixins,SelectRelatedMixin,generic.DeleteView):
+class DeletePost(LoginRequiredMixin,SelectRelatedMixin,DeleteView):
 
     model = models.Post
     select_related = ('user', 'cluster')   

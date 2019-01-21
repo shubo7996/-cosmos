@@ -139,7 +139,7 @@ LOGOUT_REDIRECT_URL = 'Thanks'
 
 #Debugger
 
-"""
+
 if DEBUG:
        
        INTERNAL_IPS = ['127.0.0.1', 'localhost',]
@@ -170,4 +170,3 @@ if DEBUG:
        DEBUG_TOOLBAR_CONFIG = {
               'INTERCEPT_REDIRECTS': False,
               }
-"""

@@ -11,11 +11,9 @@ from django.views.generic import (
     ListView,
     RedirectView
 )
-#from django.views.generic.detail import DetailView
-#from django.views.generic.list import ListView  
-#from django.views.generic.base import RedirectView 
-
+from django.contrib import messages
 from braces.views import SelectRelatedMixin
+#from . import forms
 
 from . import models
 from . import forms
@@ -35,7 +33,7 @@ class UserPosts(ListView):
     def get_queryset(self):
         
         try:
-            self.post.user = User.objects.prefetch_related('posts').get(username__iexact=self.kwargs.get('username'))
+            self.post_user = User.objects.prefetch_related('posts').get(username__iexact=self.kwargs.get('username'))
 
         except User.DoesNotExist:
             raise Http404
@@ -57,8 +55,10 @@ class PostDetail(SelectRelatedMixin,DetailView):
         return queryset.filter(user__username__iexact=self.kwargs.get('username'))
 
 class CreatePost(LoginRequiredMixin,SelectRelatedMixin,CreateView):
-    fields = ('message','cluster')
+    fields = ('message','cluster',)
     model = models.Post
+    #form_class = forms.PostForm
+
 
     def form_valid(self,form):
         self.object = form.save(commit=False)

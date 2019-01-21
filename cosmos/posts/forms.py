@@ -14,6 +14,6 @@ class PostForm(forms.ModelForm):
         if user is not None:
             self.fields["cluster"].queryset = (
                 models.Cluster.objects.filter(
-                    pk__in=user.clusters.values_list("group__pk")
+                    pk__in=user.clusters.values_list("cluster__pk")
                 )
             )

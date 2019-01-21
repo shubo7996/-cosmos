@@ -17,9 +17,10 @@ class Post(models.Model):
     cluster = models.ForeignKey(Cluster,verbose_name="posts",null=True,blank=True,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.message
+        return str(self.message)
+        
 
-    def save(save,*args,**kwargs):
+    def save(self,save,*args,**kwargs):
         self.message_html = misaka.html(self.message)
         super().save(*args,**kwargs)
 

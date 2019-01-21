@@ -22,17 +22,14 @@
 		<div class="content">
 			<h5 class="title">All Cluster</h5>
 			<ul class="list-unstyled">
-				{% for other_group in get_other_clusters %}
+				{% for other_cluster in get_other_clusters %}
 					<li class="group li-with-bullet"><a href="{% url 'clusters:single' slug=other_cluster.slug %}">{{ other_cluster.name }}</a></li>
 				{% endfor %}
 			</ul>
-			
-
-
-
 		</div>
 	</div>
 </div>
+
 {% endblock %}
 {% block post_content %}
 <div class="col-md-8">

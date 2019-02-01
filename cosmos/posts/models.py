@@ -10,17 +10,17 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Post(models.Model):
-    user = models.ForeignKey(User,verbose_name="posts",on_delete=models.CASCADE)
+    user = models.ForeignKey(User,related_name="posts",on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
-    message = models.TextField()
+    message = models.TextField(max_length=200)
     message_html = models.TextField(editable=False)
-    cluster = models.ForeignKey(Cluster,verbose_name="posts",null=True,blank=True,on_delete=models.CASCADE)
+    cluster = models.ForeignKey(Cluster,related_name="posts",null=True,blank=True,on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.message)
-        
+        print(repr(self.message), type(self.message))
+        return str(self.message) if self.message else ''
 
-    def save(self,save,*args,**kwargs):
+    def save(self,*args,**kwargs):
         self.message_html = misaka.html(self.message)
         super().save(*args,**kwargs)
 

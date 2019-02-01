@@ -16,7 +16,7 @@ from braces.views import SelectRelatedMixin
 #from . import forms
 
 from . import models
-from . import forms
+
 
 from django.contrib.auth import get_user_model
 
@@ -55,10 +55,10 @@ class PostDetail(SelectRelatedMixin,DetailView):
         return queryset.filter(user__username__iexact=self.kwargs.get('username'))
 
 class CreatePost(LoginRequiredMixin,SelectRelatedMixin,CreateView):
-    fields = ('message','cluster',)
+    
     model = models.Post
+    fields = ('message','cluster',)
     #form_class = forms.PostForm
-
 
     def form_valid(self,form):
         self.object = form.save(commit=False)

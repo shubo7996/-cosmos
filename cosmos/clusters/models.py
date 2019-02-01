@@ -33,13 +33,13 @@ class Cluster(models.Model):
 class ClusterMember(models.Model):
     cluster = models.ForeignKey(
         Cluster,
-        verbose_name = 'memberships',
+        related_name = 'memberships',
         on_delete=models.CASCADE
     )
 
     user = models.ForeignKey(
         User,
-        verbose_name = 'user_clusters',
+        related_name = 'user_clusters',
         on_delete=models.CASCADE
     )
 
